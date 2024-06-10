@@ -4,10 +4,9 @@ import {
   HStack,
   Image,
   List,
-  ListItem,
-  Spinner,
-  Text,
+  ListItem
 } from "@chakra-ui/react";
+import { FaSpinner } from "react-icons/fa";
 import useGenres, { Genre } from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
 
@@ -19,9 +18,9 @@ interface Props {
 const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
 
-  if (error) return null;
+  if (error) return <p>{error.message}</p>;
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <FaSpinner />
 
   return (
     <>
@@ -29,7 +28,8 @@ const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
         Genres
       </Heading>
       <List>
-        {data.map((genre) => (
+
+        {data?.results.map((genre) => (
           <ListItem key={genre.id} paddingY="5px">
             <HStack>
               <Image
